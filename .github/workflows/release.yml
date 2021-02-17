@@ -1,0 +1,21 @@
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' && startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    environment: build
+    steps:
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Keila ${{ github.ref }}
+          draft: false
+          prerelease: false
