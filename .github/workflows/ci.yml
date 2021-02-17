@@ -19,9 +19,8 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      run: |
         echo "Build"
-        echo "Hello?"
         echo "${{github.ref}}"
   release:
     name: Release
