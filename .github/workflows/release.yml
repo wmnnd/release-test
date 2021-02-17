@@ -28,6 +28,8 @@ jobs:
           echo "::set-output name=minor_version::${MINOR_VERSION}"
           echo "::set-output name=major_version::${MAJOR_VERSION}"
           echo "::set-output name=changelog::${MAJOR_VERSION}"
+          echo $CHANGELOG
+          echo $VERSION
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
