@@ -1,3 +1,5 @@
+name: Release
+
 on:
   push:
     tags:
@@ -15,11 +17,23 @@ jobs:
     runs-on: ubuntu-latest
     environment: build
     steps:
+      - uses: actions/checkout@v2
+      - id: meta
+        run: |
+          VERSION=`echo ${{ github.ref }} | grep -oE "([0-9]+)\.([0-9]+)\.([0-9]+)"`
+          MINOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)\.([0-9]+)"`
+          MAJOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)"`
+          CHANGELOG=`awk -v version="${VERSION}" '/## / {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
+          echo "::set-output name=version::${VERSION}"
+          echo "::set-output name=minor_version::${MINOR_VERSION}"
+          echo "::set-output name=major_version::${MAJOR_VERSION}"
+          echo "::set-output name=changelog::${MAJOR_VERSION}"
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Keila ${{ github.ref }}
+          tag_name: ${{ steps.meta.outputs.version }}
+          body: ${{ steps.meta.outputs.changelog }}
+          release_name: Keila v${{ steps.meta.outputs.version }}
           draft: false
           prerelease: false
