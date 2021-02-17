@@ -23,19 +23,18 @@ jobs:
           VERSION=`echo ${{ github.ref }} | grep -oE "([0-9]+)\.([0-9]+)\.([0-9]+)"`
           MINOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)\.([0-9]+)"`
           MAJOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)"`
-          CHANGELOG=`awk -v version="${VERSION}" '/## Version\s/ {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
           echo "::set-output name=version::${VERSION}"
           echo "::set-output name=minor_version::${MINOR_VERSION}"
           echo "::set-output name=major_version::${MAJOR_VERSION}"
-          echo "::set-output name=changelog::${CHANGELOG}"
-          echo $CHANGELOG
-          echo $VERSION
+          CHANGELOG=`awk -v version="${VERSION}" '/## Version\s/ {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
+          echo $CHANGELOG > __CHANGELOG__.md
+          cat __CHANGELOG__.md
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.meta.outputs.version }}
-          body: ${{ steps.meta.outputs.changelog }}
+          body_path: __CHANGELOG__.md
           release_name: Keila v${{ steps.meta.outputs.version }}
           draft: false
           prerelease: false
