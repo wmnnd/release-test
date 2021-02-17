@@ -1,19 +1,22 @@
 # Changelog
 
-## Version 1.0.0
+## Version 1.5.0
+
+How about some fun description?
 
 ### Added
 - Foo
 - Bar
 
-## Version 1.0.5
+## Version 0.0.10
 
 ### Added
 - Fizz
 - Buzz
 
-## Version 1.0.4
+## Version 0.0.9
 
-- Foo
-- Bar
+### Added
+- Fizz
+- Buzz
 

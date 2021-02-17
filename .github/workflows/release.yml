@@ -23,7 +23,7 @@ jobs:
           VERSION=`echo ${{ github.ref }} | grep -oE "([0-9]+)\.([0-9]+)\.([0-9]+)"`
           MINOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)\.([0-9]+)"`
           MAJOR_VERSION=`echo $VERSION | grep -oE "^([0-9]+)"`
-          CHANGELOG=`awk -v version="${VERSION}" '/## / {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
+          CHANGELOG=`awk -v version="${VERSION}" '/## Version\s/ {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
           echo "::set-output name=version::${VERSION}"
           echo "::set-output name=minor_version::${MINOR_VERSION}"
           echo "::set-output name=major_version::${MAJOR_VERSION}"
