@@ -21,6 +21,7 @@ jobs:
     steps:
       - run: |
         echo "Build"
+        echo "Hello?"
         echo "${{github.ref}}"
   release:
     name: Release
