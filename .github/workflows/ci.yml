@@ -19,7 +19,9 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Build"
+      - run: |
+        echo "Build"
+        echo ${{ github.ref }}
   release:
     name: Release
     if: github.ref == 'refs/heads/main' && startsWith(github.ref, 'refs/tags/v')
