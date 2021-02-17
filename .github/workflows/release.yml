@@ -26,8 +26,7 @@ jobs:
           echo "::set-output name=version::${VERSION}"
           echo "::set-output name=minor_version::${MINOR_VERSION}"
           echo "::set-output name=major_version::${MAJOR_VERSION}"
-          CHANGELOG=`awk -v version="${VERSION}" '/## Version\s/ {printit = $3 == version}; printit;' "$2" CHANGELOG.md`
-          echo $CHANGELOG > __CHANGELOG__.md
+          awk -v version="${VERSION}" '/## Version\s/ {printit = $3 == version}; printit;' "$2" CHANGELOG.md > __CHANGELOG__.md
           cat __CHANGELOG__.md
       - uses: actions/create-release@v1
         env:

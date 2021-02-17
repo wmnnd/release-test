@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 2.0.4
+## Version 2.0.5
 
 How about some fun description?
 
